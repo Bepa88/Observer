@@ -9,7 +9,8 @@ namespace ConsoleApp1
     class InternetShop : IObservable
     {
         List<IObserver> observers = new List<IObserver>();
-        delegate void Notify();
+        public delegate void Notify();
+        public event Notify Reaction;
 
         public void AddObserver(IObserver o)
         {
@@ -25,8 +26,15 @@ namespace ConsoleApp1
         {
             foreach (var observer in observers)
             {
-                Notify del = observer.ReactionToTheEvent;
-                del();
+                observer.ReactionToTheEvent();
+            }
+        }
+
+        public void ObserversForEvent()
+        {
+            if (Reaction != null)
+            {
+                Reaction();
             }
         }
     }
